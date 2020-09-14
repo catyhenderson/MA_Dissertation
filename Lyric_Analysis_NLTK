@@ -1,0 +1,51 @@
+# Importing necessary library
+import pandas as pd
+import numpy as np
+import string
+import nltk
+
+# sample text for performing tokenization
+text1 = "In Brazil fly flies connection, connected, connecting they drive on the right-hand side of the road. Brazil has a large coastline on the eastern side of South America"
+
+# import text file of lyrics
+
+# Remove punctuation
+table = str.maketrans(dict.fromkeys(string.punctuation))
+text = text1.translate(table)
+print(text)
+
+# text to lower case
+
+text = text.lower()
+print(text)
+
+from nltk.tokenize import word_tokenize
+tokenized_word=word_tokenize(text)
+print(tokenized_word)
+
+# List stopwords
+
+from nltk.corpus import stopwords
+stop_words=set(stopwords.words("english"))
+print("List of Stop Words:", stop_words)
+
+# Filter and remove stopwords
+
+filtered_sent=[]
+for w in tokenized_word:
+    if w not in stop_words:
+        filtered_sent.append(w)
+print("Filterd Sentence:",filtered_sent)
+
+# Stemming Stemming is a process of linguistic normalization, which reduces words to their word root word or chops off the derivational affixes.
+# For example, connection, connected, connecting word reduce to a common word "connect".
+
+from nltk.stem import PorterStemmer
+
+ps = PorterStemmer()
+
+stemmed_words=[]
+for w in filtered_sent:
+    stemmed_words.append(ps.stem(w))
+
+print("Stemmed Sentence:",stemmed_words)
