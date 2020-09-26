@@ -8,10 +8,8 @@ import seaborn as sns
 import wordcloud
 from wordcloud import WordCloud, STOPWORDS
 
-# sample text for performing tokenization
-text1 = "In Brazil fly flies connection, connected, connecting they drive on the right-hand side of the road. Brazil has a large coastline on the eastern side of South America"
-
 # import text file of lyrics
+text1 = open("/Users/caty/Desktop/OU MA Music/xx Lyrics/dayglos1980s.txt").read()
 
 # Remove punctuation
 table = str.maketrans(dict.fromkeys(string.punctuation))
@@ -19,16 +17,15 @@ text = text1.translate(table)
 print(text)
 
 # text to lower case
-
 text = text.lower()
 print(text)
 
+# tokenization (separate sentences into array of individual words)
 from nltk.tokenize import word_tokenize
 tokenized_word=word_tokenize(text)
 print(tokenized_word)
 
 # List stopwords
-
 from nltk.corpus import stopwords
 stop_words=set(stopwords.words("english"))
 print("List of Stop Words:", stop_words)
@@ -54,25 +51,36 @@ for w in filtered_sent:
 
 print("Stemmed Sentence:",stemmed_words)
 
+# remove noise (i.e. stop words missed in previous clean up)
+
+newStopWords = ['na','’', 'im']
+
+clean_data=[]
+for w in stemmed_words:
+    if w not in newStopWords:
+        clean_data.append(w)
+print("Clean data:",clean_data)
+
+
 # convert to df
 
-df = pd.DataFrame(stemmed_words, columns=['Lyrics'])
+df = pd.DataFrame(clean_data, columns=['Lyrics'])
 
-print (df)
+print (df.head(20))
 
 # Count number of words
 
 word_count = df.Lyrics.value_counts()
 print(word_count.head(20))
 
-# bar chart
+# bar chart of the 20 most frequent words
 
-df['Lyrics'].value_counts().plot(kind='bar')
+df['Lyrics'].value_counts()[:20].plot(kind='bar')
 plt.show
 
 # convert stemmed and normalized text to string and create word cloud
 
-lyrics = ' '.join(map(str, stemmed_words))
+lyrics = ' '.join(map(str, clean_data))
 wordcloud = WordCloud(max_font_size=100, max_words=100, background_color="white").generate(lyrics)
 plt.figure()
 plt.imshow(wordcloud, interpolation='bilinear')
