@@ -3,6 +3,10 @@ import pandas as pd
 import numpy as np
 import string
 import nltk
+import matplotlib.pyplot as plt
+import seaborn as sns
+import wordcloud
+from wordcloud import WordCloud, STOPWORDS
 
 # sample text for performing tokenization
 text1 = "In Brazil fly flies connection, connected, connecting they drive on the right-hand side of the road. Brazil has a large coastline on the eastern side of South America"
@@ -49,3 +53,28 @@ for w in filtered_sent:
     stemmed_words.append(ps.stem(w))
 
 print("Stemmed Sentence:",stemmed_words)
+
+# convert to df
+
+df = pd.DataFrame(stemmed_words, columns=['Lyrics'])
+
+print (df)
+
+# Count number of words
+
+word_count = df.Lyrics.value_counts()
+print(word_count.head(20))
+
+# bar chart
+
+df['Lyrics'].value_counts().plot(kind='bar')
+plt.show
+
+# convert stemmed and normalized text to string and create word cloud
+
+lyrics = ' '.join(map(str, stemmed_words))
+wordcloud = WordCloud(max_font_size=100, max_words=100, background_color="white").generate(lyrics)
+plt.figure()
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.show()
