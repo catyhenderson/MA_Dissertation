@@ -81,7 +81,7 @@ plt.show
 # convert stemmed and normalized text to string and create word cloud
 
 lyrics = ' '.join(map(str, clean_data))
-wordcloud = WordCloud(max_font_size=100, max_words=100, background_color="white").generate(lyrics)
+wordcloud = WordCloud(max_font_size=100, max_words=100, collocations=False, background_color="white").generate(lyrics)
 plt.figure()
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
