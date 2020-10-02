@@ -53,7 +53,7 @@ print("Stemmed Sentence:",stemmed_words)
 
 # remove noise (i.e. stop words missed in previous clean up)
 
-newStopWords = ['na','’', 'im']
+newStopWords = ['na','’', 'im',"ive"]
 
 clean_data=[]
 for w in stemmed_words:
@@ -81,7 +81,8 @@ plt.show
 # convert stemmed and normalized text to string and create word cloud
 
 lyrics = ' '.join(map(str, clean_data))
-wordcloud = WordCloud(max_font_size=100, max_words=100, collocations=False, background_color="white").generate(lyrics)
+wordcloud = WordCloud(collocations=False, background_color="white").generate(lyrics)
+# optional adds: max_font_size=100, max_words=100,
 plt.figure()
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
