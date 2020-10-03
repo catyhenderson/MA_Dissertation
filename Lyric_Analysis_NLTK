@@ -53,7 +53,7 @@ print("Stemmed Sentence:",stemmed_words)
 
 # remove noise (i.e. stop words missed in previous clean up)
 
-newStopWords = ['na','’', 'im',"ive"]
+newStopWords = ['na','’', 'im',"ive", "dont", "give","ta", "gon",'got', 'wan']
 
 clean_data=[]
 for w in stemmed_words:
