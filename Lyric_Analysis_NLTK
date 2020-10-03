@@ -9,7 +9,7 @@ import wordcloud
 from wordcloud import WordCloud, STOPWORDS
 
 # import text file of lyrics
-text1 = open("/Users/caty/Desktop/OU MA Music/xx Lyrics/dayglos1980s.txt").read()
+text1 = open("/Users/caty/Desktop/OU MA Music/xx Lyrics/raw text files/pointedsticks.txt").read()
 
 # Remove punctuation
 table = str.maketrans(dict.fromkeys(string.punctuation))
@@ -73,12 +73,14 @@ print (df.head(20))
 word_count = df.Lyrics.value_counts()
 print(word_count.head(20))
 
-# bar chart of the 20 most frequent words
+# bar chart of the 20 most frequent words, display and save png
 
 df['Lyrics'].value_counts()[:20].plot(kind='bar')
+plt.tight_layout()
 plt.show
+plt.savefig('/Users/caty/Desktop/OU MA Music/xx Lyrics/sticksbar.png')
 
-# convert stemmed and normalized text to string and create word cloud
+# convert stemmed and normalized text to string and create word cloud and display
 
 lyrics = ' '.join(map(str, clean_data))
 wordcloud = WordCloud(collocations=False, background_color="white").generate(lyrics)
@@ -87,3 +89,6 @@ plt.figure()
 plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
+
+# save wordcloud as png
+wordcloud.to_file('/Users/caty/Desktop/OU MA Music/xx Lyrics/sticks_wordcloud.png')
